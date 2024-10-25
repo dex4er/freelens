@@ -85,6 +85,6 @@ jobs:
         uses: devops-infra/action-pull-request@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          target_branch: main
+          target_branch: dex4er
           title: Automated update of kubectl versions
           get_diff: true

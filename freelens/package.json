@@ -252,7 +252,7 @@
     "@freelensapp/startable-stoppable": "^0.1.0",
     "@freelensapp/tooltip": "^0.1.0",
     "@freelensapp/utilities": "^0.1.0",
-    "@kubernetes/client-node": "^0.18.1",
+    "@kubernetes/client-node": "^1.1.0",
     "@material-ui/core": "^4.12.3",
     "@material-ui/lab": "^4.0.0-alpha.60",
     "@ogre-tools/fp": "^17.2.0",

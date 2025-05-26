@@ -32,6 +32,7 @@ describe("extensions page tests", () => {
     : [
         "@freelensapp/extension-example",
         "@freelensapp/extension-example@1.0.0",
+        "@freelensapp/extension-example@1.2.0",
         "@freelensapp/freelens-node-pod-menu",
         "@freelensapp/freelens-node-pod-menu@1.1.0",
         "@freelensapp/freelens-node-pod-menu@1.0.0",

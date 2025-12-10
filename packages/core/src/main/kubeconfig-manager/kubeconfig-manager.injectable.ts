@@ -23,7 +23,7 @@ import type { Cluster } from "../../common/cluster/cluster";
 const kubeconfigManagerInjectable = getInjectable({
   id: "kubeconfig-manager",
 
-  instantiate: (di, cluster) =>
+  instantiate: async (di, cluster) =>
     new KubeconfigManager(
       {
         directoryForTemp: di.inject(directoryForTempInjectable),
@@ -33,7 +33,7 @@ const kubeconfigManagerInjectable = getInjectable({
         removePath: di.inject(removePathInjectable),
         pathExists: di.inject(pathExistsInjectable),
         writeFile: di.inject(writeFileInjectable),
-        certificate: di.inject(lensProxyCertificateInjectable).get(),
+        certificate: await di.inject(lensProxyCertificateInjectable).get(),
         loadKubeconfig: di.inject(loadKubeconfigInjectable, cluster),
         kubeAuthProxyServer: di.inject(kubeAuthProxyServerInjectable, cluster),
         kubeAuthProxyUrl: di.inject(kubeAuthProxyUrlInjectable, cluster),

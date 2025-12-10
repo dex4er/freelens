@@ -16,36 +16,33 @@ const setupLensProxyCertificateInjectable = getInjectable({
     run: () => {
       const lensProxyCertificate = di.inject(lensProxyCertificateInjectable);
 
-      const cert = generate(
-        [
-          { name: "commonName", value: "Freelens Certificate Authority" },
-          { name: "organizationName", value: "Freelens" },
-        ],
-        {
-          keySize: 2048,
-          algorithm: "sha256",
-          days: 365,
-          extensions: [
-            {
-              name: "basicConstraints",
-              cA: true,
-            },
-            {
-              name: "subjectAltName",
-              altNames: [
-                { type: 2, value: "*.renderer.freelens.app" },
-                { type: 2, value: "renderer.freelens.app" },
-                { type: 2, value: "localhost" },
-                { type: 7, ip: "127.0.0.1" },
-              ],
-            },
+      lensProxyCertificate.set(
+        generate(
+          [
+            { name: "commonName", value: "localhost" },
+            { name: "organizationName", value: "Freelens" },
           ],
-        },
+          {
+            keySize: 2048,
+            algorithm: "sha256",
+            extensions: [
+              {
+                name: "basicConstraints",
+                cA: true,
+              },
+              {
+                name: "subjectAltName",
+                altNames: [
+                  { type: "dns", value: "*.renderer.freelens.app" },
+                  { type: "dns", value: "renderer.freelens.app" },
+                  { type: "dns", value: "localhost" },
+                  { type: "ip", value: "127.0.0.1" },
+                ],
+              },
+            ],
+          },
+        ),
       );
-
-      lensProxyCertificate.set(cert);
-
-      return undefined;
     },
   }),
 

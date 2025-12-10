@@ -26,7 +26,7 @@ const lensFetchInjectable = getInjectable({
 
     return async (pathnameAndQuery, init = {}) => {
       const agent = new Agent({
-        ca: lensProxyCertificate.get().cert,
+        ca: (await lensProxyCertificate.get()).cert,
       });
 
       return nodeFetch(`https://127.0.0.1:${lensProxyPort.get()}${pathnameAndQuery}`, {

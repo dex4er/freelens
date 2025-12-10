@@ -94,7 +94,7 @@ const createLensWindowInjectable = getInjectable({
           if (!browserWindow) {
             windowIsStarting = true;
 
-            browserWindow = createElectronWindow({
+            browserWindow = (await createElectronWindow)({
               ...configuration,
               onClose: () => {
                 browserWindow = undefined;

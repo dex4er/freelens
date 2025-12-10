@@ -13,8 +13,8 @@ export type RemoveProxyKubeconfig = () => Promise<void>;
 
 const removeProxyKubeconfigInjectable = getInjectable({
   id: "remove-proxy-kubeconfig",
-  instantiate: (di, cluster): RemoveProxyKubeconfig => {
-    const proxyKubeconfigManager = di.inject(kubeconfigManagerInjectable, cluster);
+  instantiate: async (di, cluster): Promise<RemoveProxyKubeconfig> => {
+    const proxyKubeconfigManager = await di.inject(kubeconfigManagerInjectable, cluster);
 
     return () => proxyKubeconfigManager.clear();
   },

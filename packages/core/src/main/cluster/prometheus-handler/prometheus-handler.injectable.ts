@@ -16,13 +16,13 @@ import type { Cluster } from "../../../common/cluster/cluster";
 const prometheusHandlerInjectable = getInjectable({
   id: "prometheus-handler",
 
-  instantiate: (di, cluster) =>
+  instantiate: async (di, cluster) =>
     createClusterPrometheusHandler(
       {
         getPrometheusProviderByKind: di.inject(getPrometheusProviderByKindInjectable),
         prometheusProviders: di.inject(prometheusProvidersInjectable),
         logger: di.inject(loggerInjectionToken),
-        loadProxyKubeconfig: di.inject(loadProxyKubeconfigInjectable, cluster),
+        loadProxyKubeconfig: await di.inject(loadProxyKubeconfigInjectable, cluster),
       },
       cluster,
     ),

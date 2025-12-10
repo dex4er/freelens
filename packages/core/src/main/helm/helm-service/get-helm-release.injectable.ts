@@ -30,7 +30,7 @@ const getHelmReleaseInjectable = getInjectable({
     const getHelmReleaseResources = di.inject(getHelmReleaseResourcesInjectable);
 
     return async ({ cluster, namespace, releaseName }) => {
-      const proxyKubeconfigManager = di.inject(kubeconfigManagerInjectable, cluster);
+      const proxyKubeconfigManager = await di.inject(kubeconfigManagerInjectable, cluster);
       const proxyKubeconfigPath = await proxyKubeconfigManager.ensurePath();
 
       const releaseResult = await getHelmReleaseData(releaseName, namespace, proxyKubeconfigPath);

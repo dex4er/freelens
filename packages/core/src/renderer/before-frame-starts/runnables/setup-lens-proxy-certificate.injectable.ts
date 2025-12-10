@@ -16,7 +16,7 @@ const setupLensProxyCertificateInjectable = getInjectable({
       const requestLensProxyCertificate = di.inject(requestLensProxyCertificateInjectable);
       const lensProxyCertificate = di.inject(lensProxyCertificateInjectable);
 
-      lensProxyCertificate.set(await requestLensProxyCertificate());
+      lensProxyCertificate.set(requestLensProxyCertificate());
     },
   }),
   injectionToken: beforeFrameStartsFirstInjectionToken,

@@ -75,12 +75,10 @@ describe("technical unit tests for local shell sessions", () => {
           }) as Partial<Kubectl> as Kubectl,
       );
 
-      di.override(
-        kubeconfigManagerInjectable,
-        () =>
-          ({
-            ensurePath: async () => "/some-proxy-kubeconfig-file",
-          }) as Partial<KubeconfigManager> as KubeconfigManager,
+      di.override(kubeconfigManagerInjectable, () =>
+        Promise.resolve({
+          ensurePath: async () => "/some-proxy-kubeconfig-file",
+        } as Partial<KubeconfigManager> as KubeconfigManager),
       );
 
       openLocalShellSession = di.inject(openLocalShellSessionInjectable);

@@ -20,7 +20,7 @@ const rollbackClusterHelmReleaseInjectable = getInjectable({
     const rollbackHelmRelease = di.inject(rollbackHelmReleaseInjectable);
 
     return async (cluster: Cluster, data: RollbackHelmReleaseData) => {
-      const proxyKubeconfigManager = di.inject(kubeconfigManagerInjectable, cluster);
+      const proxyKubeconfigManager = await di.inject(kubeconfigManagerInjectable, cluster);
       const proxyKubeconfigPath = await proxyKubeconfigManager.ensurePath();
 
       logger.debug(`[CLUSTER]: rolling back helm release for clusterId=${cluster.id}`, data);

@@ -102,7 +102,7 @@ describe("kubeconfig manager tests", () => {
       kubeConfigPath: "/kind-config.yml",
     });
 
-    kubeConfManager = di.inject(kubeconfigManagerInjectable, clusterFake);
+    kubeConfManager = await di.inject(kubeconfigManagerInjectable, clusterFake);
   });
 
   describe("when calling clear", () => {

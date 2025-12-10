@@ -29,7 +29,7 @@ describe("create clusters", () => {
   let cluster: Cluster;
   let clusterConnection: ClusterConnection;
 
-  beforeEach(() => {
+  beforeEach(async () => {
     const di = getDiForUnitTesting();
     const writeJsonSync = di.inject(writeJsonSyncInjectable);
 
@@ -42,10 +42,12 @@ describe("create clusters", () => {
     di.override(createCanIInjectable, () => () => () => Promise.resolve(true));
     di.override(createRequestNamespaceListPermissionsInjectable, () => () => async () => () => true);
     di.override(createListNamespacesInjectable, () => () => () => Promise.resolve(["default"]));
-    di.override(prometheusHandlerInjectable, () => ({
-      getPrometheusDetails: jest.fn(),
-      setupPrometheus: jest.fn(),
-    }));
+    di.override(prometheusHandlerInjectable, () =>
+      Promise.resolve({
+        getPrometheusDetails: jest.fn(),
+        setupPrometheus: jest.fn(),
+      }),
+    );
 
     writeJsonSync("/kind-config.yml", {
       apiVersion: "v1",
@@ -76,12 +78,10 @@ describe("create clusters", () => {
       preferences: {},
     });
 
-    di.override(
-      kubeconfigManagerInjectable,
-      () =>
-        ({
-          ensurePath: async () => "/some-proxy-kubeconfig-file",
-        }) as Partial<KubeconfigManager> as KubeconfigManager,
+    di.override(kubeconfigManagerInjectable, () =>
+      Promise.resolve({
+        ensurePath: async () => "/some-proxy-kubeconfig-file",
+      } as Partial<KubeconfigManager> as KubeconfigManager),
     );
 
     jest.spyOn(Kubectl.prototype, "ensureKubectl").mockReturnValue(Promise.resolve(true));
@@ -93,7 +93,7 @@ describe("create clusters", () => {
       contextName: "kind",
       kubeConfigPath: "/kind-config.yml",
     });
-    clusterConnection = di.inject(clusterConnectionInjectable, cluster);
+    clusterConnection = await di.inject(clusterConnectionInjectable, cluster);
   });
 
   it("reconnect should not throw if contextHandler is missing", () => {

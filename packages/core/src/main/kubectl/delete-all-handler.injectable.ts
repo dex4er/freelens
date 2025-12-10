@@ -30,7 +30,7 @@ const kubectlDeleteAllChannelHandlerInjectable = getRequestChannelListenerInject
         };
       }
 
-      const resourceApplier = di.inject(resourceApplierInjectable, cluster);
+      const resourceApplier = await di.inject(resourceApplierInjectable, cluster);
 
       return resourceApplier.kubectlDeleteAll(resources, extraArgs);
     };

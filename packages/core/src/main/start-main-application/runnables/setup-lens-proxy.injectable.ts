@@ -23,7 +23,7 @@ const setupLensProxyInjectable = getInjectable({
 
   instantiate: (di) => ({
     run: async () => {
-      const lensProxy = di.inject(lensProxyInjectable);
+      const lensProxy = await di.inject(lensProxyInjectable);
       const forceAppExit = di.inject(forceAppExitInjectable);
       const logger = di.inject(loggerInjectionToken);
       const lensProxyPort = di.inject(lensProxyPortInjectable);
@@ -47,7 +47,7 @@ const setupLensProxyInjectable = getInjectable({
         logger.info("🔎 Testing Freelens Proxy connection ...");
         const versionResponse = await fetch(`https://127.0.0.1:${lensProxyPort.get()}/version`, {
           agent: new Agent({
-            ca: lensProxyCertificate.get()?.cert,
+            ca: (await lensProxyCertificate.get())?.cert,
           }),
         });
 

@@ -76,7 +76,7 @@ const addMetricsRouteInjectable = getRouteInjectable({
     })(async ({ cluster, payload, query }) => {
       const queryParams: Partial<Record<string, string>> = Object.fromEntries(query.entries());
       const prometheusMetadata: ClusterPrometheusMetadata = {};
-      const prometheusHandler = di.inject(prometheusHandlerInjectable, cluster);
+      const prometheusHandler = await di.inject(prometheusHandlerInjectable, cluster);
       const mountpoints = cluster.preferences.filesystemMountpoints || initialFilesystemMountpoints;
 
       try {

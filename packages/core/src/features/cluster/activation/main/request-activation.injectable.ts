@@ -21,7 +21,7 @@ const requestClusterActivationInjectable = getInjectable({
         return;
       }
 
-      const connection = di.inject(clusterConnectionInjectable, cluster);
+      const connection = await di.inject(clusterConnectionInjectable, cluster);
 
       await connection.activate(force);
     };

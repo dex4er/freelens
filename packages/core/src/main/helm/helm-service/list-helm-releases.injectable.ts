@@ -27,7 +27,7 @@ const listClusterHelmReleasesInjectable = getInjectable({
     const listHelmReleases = di.inject(listHelmReleasesInjectable);
 
     return async (cluster, namespace) => {
-      const proxyKubeconfigManager = di.inject(kubeconfigManagerInjectable, cluster);
+      const proxyKubeconfigManager = await di.inject(kubeconfigManagerInjectable, cluster);
       const proxyKubeconfigPath = await proxyKubeconfigManager.ensurePath();
 
       logger.debug(`[CLUSTER]: listing helm releases for clusterId=${cluster.id}`, { namespace });

@@ -424,19 +424,19 @@ class ClusterConnection {
 
 const clusterConnectionInjectable = getInjectable({
   id: "cluster-connection",
-  instantiate: (di, cluster) =>
+  instantiate: async (di, cluster) =>
     new ClusterConnection(
       {
         clusterVersionDetector: di.inject(clusterVersionDetectorInjectable),
         kubeAuthProxyServer: di.inject(kubeAuthProxyServerInjectable, cluster),
         logger: di.inject(loggerInjectionToken),
-        prometheusHandler: di.inject(prometheusHandlerInjectable, cluster),
+        prometheusHandler: await di.inject(prometheusHandlerInjectable, cluster),
         broadcastConnectionUpdate: di.inject(broadcastConnectionUpdateInjectable, cluster),
         broadcastMessage: di.inject(broadcastMessageInjectable),
         createListNamespaces: di.inject(createListNamespacesInjectable),
         detectClusterMetadata: di.inject(detectClusterMetadataInjectable),
-        loadProxyKubeconfig: di.inject(loadProxyKubeconfigInjectable, cluster),
-        removeProxyKubeconfig: di.inject(removeProxyKubeconfigInjectable, cluster),
+        loadProxyKubeconfig: await di.inject(loadProxyKubeconfigInjectable, cluster),
+        removeProxyKubeconfig: await di.inject(removeProxyKubeconfigInjectable, cluster),
         requestApiResources: di.inject(requestApiResourcesInjectable),
         createAuthorizationApi: di.inject(createAuthorizationApiInjectable),
         createCoreApi: di.inject(createCoreApiInjectable),

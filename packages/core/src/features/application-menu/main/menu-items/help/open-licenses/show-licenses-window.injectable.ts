@@ -17,8 +17,8 @@ export type ShowLicensesWindow = () => Promise<void>;
 const showLicensesWindowInjectable = getInjectable({
   id: "show-licenses-window",
 
-  instantiate: (di): ShowLicensesWindow => {
-    const createElectronWindow = di.inject(createElectronWindowInjectable);
+  instantiate: async (di): Promise<ShowLicensesWindow> => {
+    const createElectronWindow = await di.inject(createElectronWindowInjectable);
     const readFile = di.inject(readFileInjectable);
     const joinPaths = di.inject(joinPathsInjectable);
     const staticFilesDirectory = di.inject(staticFilesDirectoryInjectable);

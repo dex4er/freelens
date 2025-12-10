@@ -35,7 +35,7 @@ const deleteClusterChannelListenerInjectable = getRequestChannelListenerInjectab
         return;
       }
 
-      const clusterConnection = di.inject(clusterConnectionInjectable, cluster);
+      const clusterConnection = await di.inject(clusterConnectionInjectable, cluster);
 
       clusterConnection.disconnect();
       clusterFrames.delete(cluster.id);

@@ -12,21 +12,19 @@ const kubeAuthProxyCertificateInjectable = getInjectable({
   instantiate: (di, hostname) =>
     generate(
       [
-        { name: "commonName", value: "Freelens Certificate Authority" },
+        { name: "commonName", value: "localhost" },
         { name: "organizationName", value: "Freelens" },
       ],
       {
         keySize: 2048,
         algorithm: "sha256",
-        days: 365,
         extensions: [
-          { name: "basicConstraints", cA: true },
           {
             name: "subjectAltName",
             altNames: [
-              { type: 2, value: hostname },
-              { type: 2, value: "localhost" },
-              { type: 7, ip: "127.0.0.1" },
+              { type: "dns", value: hostname },
+              { type: "dns", value: "localhost" },
+              { type: "ip", value: "127.0.0.1" },
             ],
           },
         ],

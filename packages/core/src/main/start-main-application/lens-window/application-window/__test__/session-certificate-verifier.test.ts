@@ -55,9 +55,9 @@ describe("sessionCertificateVerifier", () => {
     di.inject(setupLensProxyCertificateInjectable).run();
   });
 
-  it("marks lens proxy certificate as trusted", () => {
-    const sessionCertificateVerifier = di.inject(sessionCertificateVerifierInjectable);
-    const lensProxyCertificate = di.inject(lensProxyCertificateInjectable).get();
+  it("marks lens proxy certificate as trusted", async () => {
+    const sessionCertificateVerifier = await di.inject(sessionCertificateVerifierInjectable);
+    const lensProxyCertificate = await di.inject(lensProxyCertificateInjectable).get();
     const callback = jest.fn();
 
     sessionCertificateVerifier(
@@ -70,8 +70,8 @@ describe("sessionCertificateVerifier", () => {
     expect(callback).toHaveBeenCalledWith(ChromiumNetError.SUCCESS);
   });
 
-  it("passes verification to chromium on non lens proxy certificate", () => {
-    const sessionCertificateVerifier = di.inject(sessionCertificateVerifierInjectable);
+  it("passes verification to chromium on non lens proxy certificate", async () => {
+    const sessionCertificateVerifier = await di.inject(sessionCertificateVerifierInjectable);
     const callback = jest.fn();
 
     sessionCertificateVerifier(

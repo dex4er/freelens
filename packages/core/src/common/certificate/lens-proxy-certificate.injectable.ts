@@ -6,26 +6,41 @@
 
 import { getInjectable } from "@ogre-tools/injectable";
 
-import type { SelfSignedCert } from "selfsigned";
+import type { GenerateResult } from "selfsigned";
 
 const lensProxyCertificateInjectable = getInjectable({
   id: "lens-proxy-certificate",
   instantiate: () => {
-    let certState: SelfSignedCert;
+    let certState: GenerateResult | undefined;
+    let resolvePromise: ((value: GenerateResult) => void) | undefined;
+    let certPromise: Promise<GenerateResult> | undefined;
+
     const cert = {
-      get: () => {
-        if (!certState) {
-          throw "certificate has not been set";
+      get: async () => {
+        if (certState) {
+          return certState;
         }
 
-        return certState;
+        // Create the promise only once and store the resolver
+        if (!certPromise) {
+          certPromise = new Promise<GenerateResult>((resolve) => {
+            resolvePromise = resolve;
+          });
+        }
+
+        return certPromise;
       },
-      set: (certificate: SelfSignedCert) => {
+      set: async (certificate: Promise<GenerateResult>) => {
         if (certState) {
           throw "certificate has already been set";
         }
 
-        certState = certificate;
+        certState = await certificate;
+
+        // Resolve the pending promise if anyone is waiting
+        if (resolvePromise) {
+          resolvePromise(certState);
+        }
       },
     };
 

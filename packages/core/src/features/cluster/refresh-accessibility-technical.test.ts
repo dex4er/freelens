@@ -138,7 +138,7 @@ describe("Refresh Cluster Accessibility Technical Tests", () => {
         id: "some-cluster-id",
         kubeConfigPath: "/some-kube-config-path",
       });
-      clusterConnection = mainDi.inject(clusterConnectionInjectable, cluster);
+      clusterConnection = await mainDi.inject(clusterConnectionInjectable, cluster);
       refreshPromise = clusterConnection.refreshAccessibilityAndMetadata();
     });
 

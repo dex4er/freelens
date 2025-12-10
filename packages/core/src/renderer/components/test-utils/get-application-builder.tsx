@@ -315,7 +315,7 @@ export const getApplicationBuilder = (user: UserEvent = userEvent.setup()) => {
     };
   };
 
-  mainDi.override(createElectronWindowInjectable, () => createElectronWindowFake);
+  mainDi.override(createElectronWindowInjectable, () => Promise.resolve(createElectronWindowFake));
 
   let applicationHasStarted = false;
 

@@ -39,7 +39,7 @@ const patchResourceRouteInjectable = getRouteInjectable({
       path: `${apiPrefix}/stack`,
       payloadValidator: patchResourcePayloadValidator,
     })(async ({ cluster, payload }) => {
-      const resourceApplier = di.inject(resourceApplierInjectable, cluster);
+      const resourceApplier = await di.inject(resourceApplierInjectable, cluster);
 
       return {
         response: await resourceApplier.patch(payload.name, payload.kind, payload.patch, payload.ns),

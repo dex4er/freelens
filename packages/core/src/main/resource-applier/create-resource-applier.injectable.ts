@@ -19,7 +19,7 @@ import type { Cluster } from "../../common/cluster/cluster";
 
 const resourceApplierInjectable = getInjectable({
   id: "resource-applier",
-  instantiate: (di, cluster) =>
+  instantiate: async (di, cluster) =>
     new ResourceApplier(
       {
         deleteFile: di.inject(removePathInjectable),
@@ -29,7 +29,7 @@ const resourceApplierInjectable = getInjectable({
         logger: di.inject(loggerInjectionToken),
         writeFile: di.inject(writeFileInjectable),
         createKubectl: di.inject(createKubectlInjectable),
-        proxyKubeconfigManager: di.inject(kubeconfigManagerInjectable, cluster),
+        proxyKubeconfigManager: await di.inject(kubeconfigManagerInjectable, cluster),
       },
       cluster,
     ),

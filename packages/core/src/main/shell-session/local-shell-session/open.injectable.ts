@@ -70,7 +70,7 @@ const openLocalShellSessionInjectable = getInjectable({
 
     return async (args) => {
       const kubectl = createKubectl(args.cluster.version.get());
-      const kubeconfigManager = di.inject(kubeconfigManagerInjectable, args.cluster);
+      const kubeconfigManager = await di.inject(kubeconfigManagerInjectable, args.cluster);
       const proxyKubeconfigPath = await kubeconfigManager.ensurePath();
       const directoryContainingKubectl = await kubectl.binDir();
 

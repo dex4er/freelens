@@ -14,10 +14,11 @@ const lensProxyCertificateRequestHandlerInjectable = getRequestChannelListenerIn
   getHandler: (di) => {
     const lensProxyCertificate = di.inject(lensProxyCertificateInjectable).get();
 
-    return () => ({
-      cert: lensProxyCertificate.cert,
-      public: lensProxyCertificate.public,
+    return async () => ({
+      cert: (await lensProxyCertificate).cert,
+      public: (await lensProxyCertificate).public,
       private: "",
+      fingerprint: (await lensProxyCertificate).fingerprint,
     });
   },
 });

@@ -52,7 +52,7 @@ export type CreateElectronWindow = (config: ElectronWindowConfiguration) => Elec
 const createElectronWindowInjectable = getInjectable({
   id: "create-electron-window",
 
-  instantiate: (di): CreateElectronWindow => {
+  instantiate: async (di): Promise<CreateElectronWindow> => {
     const logger = di.inject(loggerInjectionToken);
     const openLinkInBrowser = di.inject(openLinkInBrowserInjectable);
     const getAbsolutePath = di.inject(getAbsolutePathInjectable);
@@ -60,7 +60,7 @@ const createElectronWindowInjectable = getInjectable({
     const isLinux = di.inject(isLinuxInjectable);
     const applicationInformation = di.inject(applicationInformationToken);
     const pathExistsSync = di.inject(pathExistsSyncInjectable);
-    const sessionCertificateVerifier = di.inject(sessionCertificateVerifierInjectable);
+    const sessionCertificateVerifier = await di.inject(sessionCertificateVerifierInjectable);
 
     return (configuration) => {
       const applicationWindowState = di.inject(applicationWindowStateInjectable, {

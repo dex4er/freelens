@@ -29,7 +29,7 @@ const createKubeJsonApiInjectable = getInjectable({
       if (!config.getRequestOptions) {
         config.getRequestOptions = async () => {
           const agent = new Agent({
-            ca: lensProxyCert.get().cert,
+            ca: (await lensProxyCert.get()).cert,
           });
 
           return {

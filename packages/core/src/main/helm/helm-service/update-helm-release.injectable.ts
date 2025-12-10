@@ -35,7 +35,7 @@ const updateHelmReleaseInjectable = getInjectable({
     const state = di.inject(userPreferencesStateInjectable);
 
     return async (cluster: Cluster, releaseName: string, namespace: string, data: UpdateChartArgs) => {
-      const proxyKubeconfigManager = di.inject(kubeconfigManagerInjectable, cluster);
+      const proxyKubeconfigManager = await di.inject(kubeconfigManagerInjectable, cluster);
       const proxyKubeconfigPath = await proxyKubeconfigManager.ensurePath();
       const valuesFilePath = tempy.file({ name: "values.yaml" });
 

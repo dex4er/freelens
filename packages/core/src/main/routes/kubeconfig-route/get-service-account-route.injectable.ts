@@ -21,7 +21,7 @@ const getServiceAccountRouteInjectable = getRouteInjectable({
       method: "get",
       path: `${apiPrefix}/kubeconfig/service-account/{namespace}/{account}`,
     })(async ({ params, cluster }) => {
-      const loadProxyKubeconfig = di.inject(loadProxyKubeconfigInjectable, cluster);
+      const loadProxyKubeconfig = await di.inject(loadProxyKubeconfigInjectable, cluster);
       const proxyKubeconfig = await loadProxyKubeconfig();
       const client = proxyKubeconfig.makeApiClient(CoreV1Api);
       const { namespace, account } = params;

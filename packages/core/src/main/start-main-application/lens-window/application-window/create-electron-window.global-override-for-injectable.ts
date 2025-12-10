@@ -7,11 +7,13 @@
 import { getGlobalOverride } from "@freelensapp/test-utils";
 import createElectronWindowInjectable from "./create-electron-window.injectable";
 
-export default getGlobalOverride(createElectronWindowInjectable, () => () => ({
-  loadFile: async () => {},
-  loadUrl: async () => {},
-  show: () => {},
-  close: () => {},
-  send: () => {},
-  reload: () => {},
-}));
+export default getGlobalOverride(createElectronWindowInjectable, () =>
+  Promise.resolve(() => ({
+    loadFile: async () => {},
+    loadUrl: async () => {},
+    show: () => {},
+    close: () => {},
+    send: () => {},
+    reload: () => {},
+  })),
+);

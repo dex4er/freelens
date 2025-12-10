@@ -28,7 +28,7 @@ const startPortForwardRouteInjectable = getRouteInjectable({
       const forwardPort = Number(query.get("forwardPort"));
       const address = query.get("address") ?? "localhost";
 
-      const proxyKubeconfigManager = di.inject(kubeconfigManagerInjectable, cluster);
+      const proxyKubeconfigManager = await di.inject(kubeconfigManagerInjectable, cluster);
 
       try {
         let portForward = PortForward.getPortforward({

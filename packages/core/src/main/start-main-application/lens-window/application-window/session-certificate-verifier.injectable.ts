@@ -21,8 +21,8 @@ export type CertificateVerificationCallback = (error: ChromiumNetError) => void;
 
 const sessionCertificateVerifierInjectable = getInjectable({
   id: "session-certificate-verifier",
-  instantiate: (di) => {
-    const lensProxyCertificate = di.inject(lensProxyCertificateInjectable).get();
+  instantiate: async (di) => {
+    const lensProxyCertificate = await di.inject(lensProxyCertificateInjectable).get();
     const lensProxyX509Cert = new X509Certificate(lensProxyCertificate.cert);
 
     return (request: Request, shouldBeTrusted: CertificateVerificationCallback) => {

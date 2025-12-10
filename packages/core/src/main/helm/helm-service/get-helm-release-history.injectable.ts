@@ -20,7 +20,7 @@ const getClusterHelmReleaseHistoryInjectable = getInjectable({
     const getHelmReleaseHistory = di.inject(getHelmReleaseHistoryInjectable);
 
     return async (cluster: Cluster, data: GetHelmReleaseHistoryData) => {
-      const proxyKubeconfigManager = di.inject(kubeconfigManagerInjectable, cluster);
+      const proxyKubeconfigManager = await di.inject(kubeconfigManagerInjectable, cluster);
       const proxyKubeconfigPath = await proxyKubeconfigManager.ensurePath();
 
       logger.debug(`[CLUSTER]: Fetch release history for clusterId=${cluster.id}`, data);

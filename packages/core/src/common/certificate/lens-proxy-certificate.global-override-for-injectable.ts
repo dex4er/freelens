@@ -9,11 +9,13 @@ import lensProxyCertificateInjectable from "./lens-proxy-certificate.injectable"
 
 export default getGlobalOverride(lensProxyCertificateInjectable, () => {
   return {
-    get: () => ({
-      public: "<public-data>",
-      private: "<private-data>",
-      cert: "<ca-data>",
-    }),
-    set: () => {},
+    get: () =>
+      Promise.resolve({
+        public: "<public-data>",
+        private: "<private-data>",
+        cert: "<ca-data>",
+        fingerprint: "<fingerprint-data>",
+      }),
+    set: () => Promise.resolve(),
   };
 });

@@ -113,7 +113,9 @@ describe("PrometheusHandler", () => {
         }
       });
 
-      expect(() => di.inject(prometheusHandlerInjectable, cluster).getPrometheusDetails()).rejects.toThrowError();
+      const handler = await di.inject(prometheusHandlerInjectable, cluster);
+
+      await expect(handler.getPrometheusDetails()).rejects.toThrowError();
     });
 
     it.each([
@@ -148,7 +150,8 @@ describe("PrometheusHandler", () => {
         }
       });
 
-      const details = await di.inject(prometheusHandlerInjectable, cluster).getPrometheusDetails();
+      const handler = await di.inject(prometheusHandlerInjectable, cluster);
+      const details = await handler.getPrometheusDetails();
 
       expect(details.provider.kind === `id_failure_${failures}`);
     });
@@ -184,9 +187,10 @@ describe("PrometheusHandler", () => {
           );
         }
       });
+      const handler = await di.inject(prometheusHandlerInjectable, cluster);
+      const details = await handler.getPrometheusDetails();
 
-      const details = await di.inject(prometheusHandlerInjectable, cluster).getPrometheusDetails();
-
+      expect(details.provider.kind === "id_failure_0");
       expect(details.provider.kind === "id_failure_0");
     });
 
@@ -233,8 +237,10 @@ describe("PrometheusHandler", () => {
           );
         }
       });
+      const handler = await di.inject(prometheusHandlerInjectable, cluster);
+      const details = await handler.getPrometheusDetails();
 
-      const details = await di.inject(prometheusHandlerInjectable, cluster).getPrometheusDetails();
+      expect(details.provider.kind === "id_success_0");
 
       expect(details.provider.kind === "id_success_0");
     });

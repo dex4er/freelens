@@ -20,7 +20,7 @@ const deleteClusterHelmReleaseInjectable = getInjectable({
     const deleteHelmRelease = di.inject(deleteHelmReleaseInjectable);
 
     return async (cluster: Cluster, data: DeleteHelmReleaseData) => {
-      const proxyKubeconfigManager = di.inject(kubeconfigManagerInjectable, cluster);
+      const proxyKubeconfigManager = await di.inject(kubeconfigManagerInjectable, cluster);
       const proxyKubeconfigPath = await proxyKubeconfigManager.ensurePath();
 
       logger.debug(`[CLUSTER]: Delete helm release`, data);

@@ -10,7 +10,7 @@ import { dumpConfigYaml } from "../../common/kube-helpers";
 import type { KubeConfig } from "@freelensapp/kubernetes-client-node";
 import type { Logger } from "@freelensapp/logger";
 
-import type { SelfSignedCert } from "selfsigned";
+import type { GenerateResult } from "selfsigned";
 import type { PartialDeep } from "type-fest";
 
 import type { Cluster } from "../../common/cluster/cluster";
@@ -25,7 +25,7 @@ import type { KubeAuthProxyServer } from "../cluster/kube-auth-proxy-server.inje
 interface KubeconfigManagerDependencies {
   readonly directoryForTemp: string;
   readonly logger: Logger;
-  readonly certificate: SelfSignedCert;
+  readonly certificate: GenerateResult;
   readonly kubeAuthProxyServer: KubeAuthProxyServer;
   readonly kubeAuthProxyUrl: string;
   joinPaths: JoinPaths;

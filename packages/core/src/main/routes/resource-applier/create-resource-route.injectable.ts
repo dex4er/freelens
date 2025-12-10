@@ -19,7 +19,7 @@ const createResourceRouteInjectable = getRouteInjectable({
       path: `${apiPrefix}/stack`,
       payloadValidator: Joi.string(),
     })(async ({ cluster, payload }) => {
-      const resourceApplier = di.inject(resourceApplierInjectable, cluster);
+      const resourceApplier = await di.inject(resourceApplierInjectable, cluster);
 
       return {
         response: await resourceApplier.create(payload),

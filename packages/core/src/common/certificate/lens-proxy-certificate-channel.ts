@@ -6,6 +6,6 @@
 
 import { getRequestChannel } from "@freelensapp/messaging";
 
-import type { SelfSignedCert } from "selfsigned";
+import type { GenerateResult } from "selfsigned";
 
-export const lensProxyCertificateChannel = getRequestChannel<void, SelfSignedCert>("request-lens-proxy-certificate");
+export const lensProxyCertificateChannel = getRequestChannel<void, GenerateResult>("request-lens-proxy-certificate");

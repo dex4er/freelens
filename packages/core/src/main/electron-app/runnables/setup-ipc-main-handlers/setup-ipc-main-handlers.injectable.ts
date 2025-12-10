@@ -37,7 +37,7 @@ const setupIpcMainHandlersInjectable = getInjectable({
 
           if (!cluster) return;
 
-          const connection = di.inject(clusterConnectionInjectable, cluster);
+          const connection = await di.inject(clusterConnectionInjectable, cluster);
           await connection.refreshAccessibilityAndMetadata();
         },
       });

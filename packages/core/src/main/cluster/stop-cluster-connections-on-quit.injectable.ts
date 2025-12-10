@@ -12,11 +12,12 @@ import clusterConnectionInjectable from "./cluster-connection.injectable";
 const stopAllClusterConnectionsOnQuitInjectable = getInjectable({
   id: "stop-all-cluster-connections-on-quit",
   instantiate: (di) => ({
-    run: () => {
+    run: async () => {
       const clusters = di.inject(clustersInjectable).get();
 
       for (const cluster of clusters) {
-        di.inject(clusterConnectionInjectable, cluster).disconnect();
+        const connection = await di.inject(clusterConnectionInjectable, cluster);
+        connection.disconnect();
       }
     },
   }),

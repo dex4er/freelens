@@ -12,7 +12,7 @@ const closeLensProxyOnQuitInjectable = getInjectable({
   id: "close-lens-proxy-on-quit",
   instantiate: (di) => ({
     run: async () => {
-      const lensProxy = di.inject(lensProxyInjectable);
+      const lensProxy = await di.inject(lensProxyInjectable);
 
       await lensProxy.close();
     },

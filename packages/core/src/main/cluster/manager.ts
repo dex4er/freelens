@@ -40,7 +40,7 @@ interface Dependencies {
   readonly clusters: IComputedValue<Cluster[]>;
   updateEntityMetadata: UpdateEntityMetadata;
   updateEntitySpec: UpdateEntitySpec;
-  getClusterConnection: (cluster: Cluster) => ClusterConnection;
+  getClusterConnection: (cluster: Cluster) => Promise<ClusterConnection>;
   getClusterById: GetClusterById;
   addCluster: AddCluster;
 }
@@ -226,7 +226,7 @@ export class ClusterManager {
           cluster.online.set(false);
           cluster.accessible.set(false);
 
-          await this.dependencies.getClusterConnection(cluster).refreshConnectionStatus();
+          await (await this.dependencies.getClusterConnection(cluster)).refreshConnectionStatus();
         }),
     );
   };
@@ -238,7 +238,7 @@ export class ClusterManager {
       this.dependencies.clusters
         .get()
         .filter((cluster) => !cluster.disconnected.get())
-        .map((cluster) => this.dependencies.getClusterConnection(cluster).refreshConnectionStatus()),
+        .map(async (cluster) => (await this.dependencies.getClusterConnection(cluster)).refreshConnectionStatus()),
     );
   };
 }

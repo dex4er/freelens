@@ -15,7 +15,7 @@ import type http from "http";
 import type { Logger } from "@freelensapp/logger";
 
 import type httpProxy from "http-proxy-node16";
-import type { SelfSignedCert } from "selfsigned";
+import type { GenerateResult } from "selfsigned";
 import type { SetRequired } from "type-fest";
 
 import type { EmitAppEvent } from "../../common/app-event-bus/emit-event.injectable";
@@ -39,7 +39,7 @@ interface Dependencies {
   readonly lensProxyPort: { set: (portNumber: number) => void };
   readonly contentSecurityPolicy: string;
   readonly logger: Logger;
-  readonly certificate: SelfSignedCert;
+  readonly certificate: GenerateResult;
 }
 
 const watchParam = "watch";

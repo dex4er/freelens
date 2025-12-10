@@ -63,12 +63,10 @@ describe("kubeconfig-sync.source tests", () => {
       throw new Error("tried call writeJsonSync without override");
     });
 
-    di.override(
-      kubeconfigManagerInjectable,
-      () =>
-        ({
-          ensurePath: async () => "/some-proxy-kubeconfig-file",
-        }) as Partial<KubeconfigManager> as KubeconfigManager,
+    di.override(kubeconfigManagerInjectable, () =>
+      Promise.resolve({
+        ensurePath: async () => "/some-proxy-kubeconfig-file",
+      } as Partial<KubeconfigManager> as KubeconfigManager),
     );
 
     kubeconfigSyncs = observable.map();

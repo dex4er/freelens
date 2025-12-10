@@ -27,7 +27,7 @@ const requestClusterDeactivationInjectable = getInjectable({
         return;
       }
 
-      const connection = di.inject(clusterConnectionInjectable, cluster);
+      const connection = await di.inject(clusterConnectionInjectable, cluster);
 
       connection.disconnect();
       clusterFrames.delete(clusterId);

@@ -1,0 +1,20 @@
+diff --git a/index.js b/index.js
+index f553e1c4e5167bb2c685f0a2e563dfb8204ff6a3..a95fd2a9e84e90a2c1aa26e5094b6c5c1aec3972 100644
+--- a/index.js
++++ b/index.js
+@@ -172,12 +172,14 @@ async function generatePemAsync(keyPair, attrs, options, ca) {
+   const commonNameAttr = attrs.find(attr => attr.name === 'commonName' || attr.shortName === 'CN');
+   const commonName = commonNameAttr ? commonNameAttr.value : 'localhost';
+
++  const subjectAltNames = options.extensions.find(ext => ext.name === 'subjectAltName').altNames;
++
+   // Build extensions array
+   const extensions = [
+     new BasicConstraintsExtension(false, undefined, true),
+     new KeyUsagesExtension(KeyUsageFlags.digitalSignature | KeyUsageFlags.keyEncipherment, true),
+     new ExtendedKeyUsageExtension([ExtendedKeyUsage.serverAuth, ExtendedKeyUsage.clientAuth], false),
+-    new SubjectAlternativeNameExtension([
++    new SubjectAlternativeNameExtension(subjectAltNames.length > 0 ? subjectAltNames : [
+       { type: 'dns', value: commonName },
+       ...(commonName === 'localhost' ? [{ type: 'ip', value: '127.0.0.1' }] : [])
+     ], false)

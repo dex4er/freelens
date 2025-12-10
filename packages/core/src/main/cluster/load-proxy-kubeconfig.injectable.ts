@@ -16,9 +16,9 @@ export type LoadProxyKubeconfig = () => Promise<KubeConfig>;
 
 const loadProxyKubeconfigInjectable = getInjectable({
   id: "load-proxy-kubeconfig",
-  instantiate: (di, cluster) => {
+  instantiate: async (di, cluster) => {
     const loadConfigFromFile = di.inject(loadConfigFromFileInjectable);
-    const proxyKubeconfigManager = di.inject(kubeconfigManagerInjectable, cluster);
+    const proxyKubeconfigManager = await di.inject(kubeconfigManagerInjectable, cluster);
 
     return async () => {
       const proxyKubeconfigPath = await proxyKubeconfigManager.ensurePath();

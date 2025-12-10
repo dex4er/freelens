@@ -21,7 +21,7 @@ import shellApiRequestInjectable from "./proxy-functions/shell-api-request.injec
 const lensProxyInjectable = getInjectable({
   id: "lens-proxy",
 
-  instantiate: (di) =>
+  instantiate: async (di) =>
     new LensProxy({
       router: di.inject(routerInjectable),
       proxy: httpProxy.createProxy(),
@@ -32,7 +32,7 @@ const lensProxyInjectable = getInjectable({
       contentSecurityPolicy: di.inject(contentSecurityPolicyInjectable),
       emitAppEvent: di.inject(emitAppEventInjectable),
       logger: di.inject(loggerInjectionToken),
-      certificate: di.inject(lensProxyCertificateInjectable).get(),
+      certificate: await di.inject(lensProxyCertificateInjectable).get(),
       getKubeAuthProxyServer: (cluster) => di.inject(kubeAuthProxyServerInjectable, cluster),
     }),
 });

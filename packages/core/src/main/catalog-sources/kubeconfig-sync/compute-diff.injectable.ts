@@ -37,7 +37,7 @@ const computeKubeconfigDiffInjectable = getInjectable({
     const logger = di.inject(kubeconfigSyncLoggerInjectable);
     const getClusterById = di.inject(getClusterByIdInjectable);
 
-    return action((contents, source, filePath) => {
+    return action(async (contents, source, filePath) => {
       try {
         const { config, error } = loadConfigFromString(contents);
 
@@ -61,7 +61,7 @@ const computeKubeconfigDiffInjectable = getInjectable({
             // remove from the deleting set, so that if a new context of the same name is added, it isn't marked as deleting
             clustersThatAreBeingDeleted.delete(value[0].id);
 
-            const clusterConnection = di.inject(clusterConnectionInjectable, value[0]);
+            const clusterConnection = await di.inject(clusterConnectionInjectable, value[0]);
 
             clusterConnection.disconnect();
             source.delete(contextName);

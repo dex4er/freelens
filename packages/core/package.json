@@ -89,7 +89,7 @@
     "@freelensapp/utilities": "workspace:^",
     "@hapi/call": "catalog:",
     "@hapi/subtext": "catalog:",
-    "@kubernetes/client-node": "catalog:",
+    "@kubernetes/client-node": "2.0.0",
     "@mui/material": "catalog:",
     "@ogre-tools/injectable": "catalog:",
     "@ogre-tools/injectable-extension-for-mobx": "catalog:",
